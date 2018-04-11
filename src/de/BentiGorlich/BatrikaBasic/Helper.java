@@ -1,27 +1,18 @@
 package de.BentiGorlich.BatrikaBasic;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
-import java.util.Base64;
 import java.util.Calendar;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-
-import org.json.JSONObject;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
+import com.google.gson.JsonObject;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class Helper {
-	public static String JsonToString(JSONObject json) {
+	public static String JsonToString(JsonObject json) {
 		String erg = json.toString();
 		erg = erg.replace("{", "{\n");
 		erg = erg.replace("}", "\n}");
@@ -58,38 +49,16 @@ public class Helper {
 	    //return complete hash
 	   return sb.toString();
 	}
-	private static Image Base64ToImage(String imagedata) {
-		if(!imagedata.equals("")) {
-			byte[] base = Base64.getDecoder().decode(imagedata);
-			Image erg = new Image(new ByteArrayInputStream(base), 500, 500, true, true);
-			return erg;
-		}
-		return null;
-	}
-
-	private static String ImageToBase64(Image profile_picture) {
-		if(profile_picture != null){
-			try {
-				BufferedImage bImage = SwingFXUtils.fromFXImage(profile_picture, null);
-				ByteArrayOutputStream s = new ByteArrayOutputStream();
-				ImageIO.write(bImage, "png", s);
-				byte[] res  = s.toByteArray();
-				s.close(); 
-				String erg = Base64.getEncoder().encodeToString(res);
-				return erg;
-			} catch(IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return "";
-	}
 	
 	public static String SHA256(String toHash) {
 		try{ 
 			MessageDigest dig = MessageDigest.getInstance("SHA-256");
 			byte[] hash = dig.digest(toHash.getBytes("UTF-8"));
-			String encoded = Base64.getEncoder().encodeToString(hash);
-			return encoded;
+			StringBuilder sb = new StringBuilder();
+			for (byte b : hash) {
+				sb.append(String.format("%02X ", b));
+			}
+			return sb.toString();
 		} catch(Exception e) {
 			return null;
 		}
