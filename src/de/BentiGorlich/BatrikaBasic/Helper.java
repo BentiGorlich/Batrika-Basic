@@ -7,12 +7,14 @@ import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Random;
 
-import com.google.gson.JsonObject;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import org.json.JSONObject;
+
+
 
 public class Helper {
-	public static String JsonToString(JsonObject json) {
+	public static String JsonToString(JSONObject json) {
 		String erg = json.toString();
 		erg = erg.replace("{", "{\n");
 		erg = erg.replace("}", "\n}");

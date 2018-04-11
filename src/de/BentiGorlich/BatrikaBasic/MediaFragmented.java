@@ -1,8 +1,8 @@
 package de.BentiGorlich.BatrikaBasic;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
+
+import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class MediaFragmented extends ArrayList<JSONArray>{
